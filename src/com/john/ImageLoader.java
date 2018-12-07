@@ -17,9 +17,12 @@ public class ImageLoader {
     public BufferedImage blackHeart;
     public BufferedImage box;
 
+    //inicializace loaderu
     public void init(){
         Handler h = new Handler();
         BufferedImageLoader loader = new BufferedImageLoader();
+
+        //načte obrázek ze souboru spritesheet.java
         try{
             spriteSheet = loader.loadImage("/sprite_sheet.png");
         }catch (IOException e){

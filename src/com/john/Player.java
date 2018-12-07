@@ -26,6 +26,7 @@ public class Player{
 
     }
 
+    //načtení obrázku hráče
     private void loadImage(){
         loader.init();
         image = loader.playerS2;
@@ -34,6 +35,7 @@ public class Player{
         h = image.getHeight();
     }
 
+    //metoda pro pohyb
     public void move(){
         x += dx;
         y += dy;
@@ -59,6 +61,7 @@ public class Player{
         return image;
     }
 
+    //získání zmáčknuté klávesy
     public void keyPressed(KeyEvent e){
 
         int code = e.getKeyCode();

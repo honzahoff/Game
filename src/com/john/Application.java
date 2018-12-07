@@ -9,6 +9,7 @@ public class Application extends JFrame {
         initUI();
     }
 
+    //inicializace plochy
     public void initUI(){
 
         add(new Board());

@@ -21,6 +21,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
     }
 
 
+    //inicializace plochy
     public void initBoard(){
 
         addKeyListener(this);
@@ -31,6 +32,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
         timer.start();
     }
 
+    //implementovaná třída
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -42,7 +44,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
     }
 
 
-
+    //základní kreslení
     private void doDrawing(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
 
@@ -53,6 +55,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
 
     }
 
+    //kreslení srdíček
     private void paintHearts(Graphics g){
 
         loader.init();
@@ -86,16 +89,19 @@ public class Board extends JPanel implements ActionListener, KeyListener{
         }
     }
 
+    //reakce na stisk klávesy
     public void actionPerformed(ActionEvent e){
 
         step();
     }
 
+    //provedení pohybu
     private void step(){
         player.move();
         repaint(player.getX() -1, player.getY() - 1, player.getW() +2, player.getH()+2);
     }
 
+    //reakce na r - odečtení života: provizorní
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();

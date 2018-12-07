@@ -6,6 +6,8 @@ public class SpriteSheet {
 
     private BufferedImage image;
 
+    //spojení s res/sprite_sheet.png a čtení částí obrázku z něho
+
     public SpriteSheet(BufferedImage image){
         this.image = image;
     }
