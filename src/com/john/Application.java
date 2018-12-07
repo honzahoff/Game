@@ -13,7 +13,7 @@ public class Application extends JFrame {
     public void initUI(){
 
         add(new Board());
-        setSize(960,540);
+        setSize(960,512);
         setTitle("Game");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);

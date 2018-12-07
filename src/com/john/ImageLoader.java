@@ -9,10 +9,10 @@ import java.io.IOException;
 public class ImageLoader {
 
     private BufferedImage spriteSheet = null;
-    public BufferedImage player;
+    private BufferedImage playerRough;
     public BufferedImage bck;
-    public Image playerScaled;
-    public BufferedImage playerS2;
+    private Image playerScaled;
+    public BufferedImage player;
     public BufferedImage heart;
     public BufferedImage blackHeart;
     public BufferedImage box;
@@ -29,12 +29,12 @@ public class ImageLoader {
             e.printStackTrace();
         }
         SpriteSheet ss =  new SpriteSheet(spriteSheet);
-        player = ss.grabImage(2,1,32,32);
+        playerRough = ss.grabImage(2,1,32,32);
 
-        playerScaled = player.getScaledInstance(h.spiderW,h.spiderH,BufferedImage.SCALE_DEFAULT);
+        playerScaled = playerRough.getScaledInstance(h.spiderW,h.spiderH,BufferedImage.SCALE_DEFAULT);
 
 
-        playerS2 = toBufferedImage(playerScaled);
+        player = toBufferedImage(playerScaled);
 
         bck = ss.grabImage(1,1,32,32);
         heart = ss.grabImage(3,1,32,32);

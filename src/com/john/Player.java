@@ -29,7 +29,7 @@ public class Player{
     //načtení obrázku hráče
     private void loadImage(){
         loader.init();
-        image = loader.playerS2;
+        image = loader.player;
 
         w = image.getWidth();
         h = image.getHeight();

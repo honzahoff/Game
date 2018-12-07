@@ -12,7 +12,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
     private final int DELAY = 10;
     private Player player;
     private Floor floor;
-    public int live = 3;
+    public int live = 1;
     public boolean isAlive = true;
     ImageLoader loader = new ImageLoader();
 
@@ -36,6 +36,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         doDrawing(g);
 
         Toolkit.getDefaultToolkit().sync();
@@ -49,6 +50,11 @@ public class Board extends JPanel implements ActionListener, KeyListener{
         Graphics2D g2d = (Graphics2D) g;
 
         loader.init();
+        for(int i = 0; i < 30; i++) {
+            for(int j = 0; j < 16; j++) {
+                g.drawImage(loader.bck, i * 32, j * 32, this);
+            }
+        }
         paintHearts(g);
 
         g2d.drawImage(player.getImage(), player.getX(), player.getY(), this);
@@ -77,15 +83,13 @@ public class Board extends JPanel implements ActionListener, KeyListener{
 
 
         } else if (live == 0) {
-            for (int i = 0; i < 3; i++) {
-                g.drawImage(loader.blackHeart, i * 32, 0, null);
+            g.drawImage(loader.blackHeart, 64, 0, null);
+            g.drawImage(loader.blackHeart, 32, 0, null);
+            g.drawImage(loader.blackHeart, 128, 0, null);
+                g.drawString("GAME OVER", 480, 256);
+
                 isAlive = false;
-            }
-        } else {
-            for (int i = 0; i < 3; i++) {
-                g.drawImage(loader.blackHeart, i * 32, 0, null);
-                isAlive = false;
-            }
+
         }
     }
 
