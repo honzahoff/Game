@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.sql.Time;
 
 public class Board extends JPanel implements ActionListener, KeyListener{
@@ -12,7 +13,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
     private final int DELAY = 10;
     private Player player;
     private Floor floor;
-    public int live = 1;
+    public int live = 3;
     public boolean isAlive = true;
     ImageLoader loader = new ImageLoader();
 
@@ -65,6 +66,26 @@ public class Board extends JPanel implements ActionListener, KeyListener{
     private void paintHearts(Graphics g){
 
         loader.init();
+
+        for (int i = 0; i < 3; i++) {
+
+            if(live ==i){
+                g.drawImage(loader.heart, i * 32, 0, null);
+            }
+            BufferedImage img2;
+            if(i < live) {
+                img2 = loader.heart;
+            }
+
+            else {
+                img2 = loader.blackHeart;
+            }
+
+            g.drawImage(img2, i * 32, 0, null);
+            g.drawString("Live:"+live,50,50);
+        }
+
+        /*
         if (live == 3) {
             for (int i = 0; i < 3; i++) {
                 g.drawImage(loader.heart, i * 32, 0, null);
@@ -75,22 +96,21 @@ public class Board extends JPanel implements ActionListener, KeyListener{
                 g.drawImage(loader.blackHeart, 64, 0, null);
             }
         else if (live == 1) {
-            for (int i = 0; i < 1; i++) {
-                g.drawImage(loader.heart, i * 32, 0, null);
+
+                g.drawImage(loader.heart, 0, 0, null);
                 g.drawImage(loader.blackHeart, 64, 0, null);
                 g.drawImage(loader.blackHeart, 32, 0, null);
-            }
 
 
-        } else if (live == 0) {
-            g.drawImage(loader.blackHeart, 64, 0, null);
+
+        } else if (live <= 0) {
+            g.drawImage(loader.blackHeart, 0, 0, null);
             g.drawImage(loader.blackHeart, 32, 0, null);
-            g.drawImage(loader.blackHeart, 128, 0, null);
-                g.drawString("GAME OVER", 480, 256);
-
-                isAlive = false;
+            g.drawImage(loader.blackHeart, 64, 0, null);
+            g.drawString("GAME OVER", 480, 256);
 
         }
+        */
     }
 
     //reakce na stisk klávesy
