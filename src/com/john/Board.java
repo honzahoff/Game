@@ -7,26 +7,29 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.sql.Time;
 
-public class Board extends JPanel implements ActionListener, KeyListener{
+public class Board extends JPanel implements ActionListener, KeyListener {
 
     private Timer timer;
     private final int DELAY = 10;
     private Player player;
-    private Floor floor;
+    private Box box;
     public int live = 3;
     public boolean isAlive = true;
     ImageLoader loader = new ImageLoader();
 
-    public Board(){
+    public Board() {
         initBoard();
+
+        System.out.println(player.getW());
     }
 
 
     //inicializace plochy
-    public void initBoard(){
+    public void initBoard() {
 
         addKeyListener(this);
-        player = new Player();
+        player = new Player(getX(), getY());
+        box = new Box();
         setFocusable(true);
 
         timer = new Timer(DELAY, this);
@@ -47,43 +50,60 @@ public class Board extends JPanel implements ActionListener, KeyListener{
 
 
     //základní kreslení
-    private void doDrawing(Graphics g){
+    private void doDrawing(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 
         loader.init();
-        for(int i = 0; i < 30; i++) {
-            for(int j = 0; j < 16; j++) {
+        for (int i = 0; i < 30; i++) {
+            for (int j = 0; j < 16; j++) {
                 g.drawImage(loader.bck, i * 32, j * 32, this);
             }
         }
         paintHearts(g);
 
+        g2d.drawImage(box.getImage(), box.getX(), box.getY(), this);
         g2d.drawImage(player.getImage(), player.getX(), player.getY(), this);
+
 
     }
 
     //kreslení srdíček
-    private void paintHearts(Graphics g){
+    private void paintHearts(Graphics g) {
 
         loader.init();
 
         for (int i = 0; i < 3; i++) {
 
-            if(live ==i){
+            if (live == i) {
                 g.drawImage(loader.heart, i * 32, 0, null);
             }
             BufferedImage img2;
-            if(i < live) {
+            if (i < live) {
                 img2 = loader.heart;
-            }
-
-            else {
+            } else {
                 img2 = loader.blackHeart;
+
             }
 
             g.drawImage(img2, i * 32, 0, null);
-            g.drawString("Live:"+live,50,50);
+            g.drawString("Live:" + live, 50, 50);
         }
+    }
+
+    public void checkCollisions() {
+
+        Rectangle r1 = player.getBounds();
+        Rectangle r2 = box.getBounds();
+
+        if (r1.intersects(r2)) {
+            System.out.println("Does intersect!");
+
+        }
+        else{
+            System.out.println("Does not intersect!");
+
+        }
+    }
 
         /*
         if (live == 3) {
@@ -110,13 +130,15 @@ public class Board extends JPanel implements ActionListener, KeyListener{
             g.drawString("GAME OVER", 480, 256);
 
         }
-        */
-    }
+
+}
+*/
 
     //reakce na stisk klávesy
     public void actionPerformed(ActionEvent e){
 
         step();
+        checkCollisions();
     }
 
     //provedení pohybu

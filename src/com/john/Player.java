@@ -8,20 +8,20 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.security.Key;
 
-public class Player{
+public class Player extends Sprite{
 
-    private int dx;
-    private int dy;
-    private int x = 200;
-    private int y = 200;
+    public int dx;
+    public int dy;
+    public int x = 200;
+    public int y = 200;
     private int w;
     private int h;
     private BufferedImage image;
     ImageLoader loader = new ImageLoader();
 
 
-    public Player(){
-
+    public Player(int x, int y){
+        super(x,y);
         loadImage();
 
     }
@@ -37,8 +37,29 @@ public class Player{
 
     //metoda pro pohyb
     public void move(){
-        x += dx;
-        y += dy;
+
+        if (x > 0 && x < 960 - this.w && y > 0 && y < 540 - this.h - 20) {
+
+            x += dx;
+            y += dy;
+        }
+
+        else if (y < 0 + 16) {
+            this.y = y + 10;
+        }
+
+        else if (y > 540 - this.h - 20) {
+            this.y = y - 10;
+        }
+
+        else if (x > 960 - this.w) {
+            this.x = x - 10;
+
+        } else {
+            this.x = x + 10;
+
+        }
+
     }
 
     public int getX(){
@@ -81,6 +102,9 @@ public class Player{
         if(code == KeyEvent.VK_S){dy = 0;}
         if(code == KeyEvent.VK_D){dx = 0;}
         if(code == KeyEvent.VK_A){dx = 0;}
+    }
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, w, h);
     }
 
 }
