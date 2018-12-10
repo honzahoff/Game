@@ -11,26 +11,34 @@ public class Sprite {
     protected int y;
     protected int width;
     protected int height;
-    protected BufferedImage image;
-    ImageLoader loader = new ImageLoader();
+    protected boolean visible;
+    protected Image image;
 
     public Sprite(int x, int y) {
 
         this.x = x;
         this.y = y;
+        visible = true;
     }
 
+    //načtení obrázku
+    protected void loadImage(String path){
+        ImageIcon ii = new ImageIcon(path);
+        image = ii.getImage();
+    }
 
+    //získání rozměrů obrázku
     protected void getImageDimensions() {
 
         width = image.getWidth(null);
         height = image.getHeight(null);
     }
 
-    public BufferedImage getImage() {
+    public Image getImage() {
         return image;
     }
 
+    //gettery
     public int getX() {
         return x;
     }
@@ -38,6 +46,10 @@ public class Sprite {
     public int getY() {
         return y;
     }
+
+    public int getW(){ return width;}
+
+    public int getH(){ return height;}
 
 
 
