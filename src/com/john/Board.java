@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.sql.Time;
 
 public class Board extends JPanel implements ActionListener, KeyListener {
 
