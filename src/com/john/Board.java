@@ -10,6 +10,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
     private Timer timer;
     private final int DELAY = 10;
+    public int test = 10;
     private Player player;
     public int live = 3;
     ImageLoader loader = new ImageLoader();
