@@ -19,7 +19,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         GAME,
         MENU
     };
-    public static STATE State = STATE.GAME;
+    public static STATE State = STATE.MENU;
 
     public Board() {
 
@@ -54,6 +54,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
             doDrawing(g);
             paintHearts(g);
             Toolkit.getDefaultToolkit().sync();
+            repaint();
         }
         else if (State == STATE.MENU){
          m.render(g);
