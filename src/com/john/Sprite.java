@@ -22,9 +22,25 @@ public class Sprite {
     }
 
     //načtení obrázku
-    protected void loadImage(String path){
+    protected void loadImage(String path, int scale){
         ImageIcon ii = new ImageIcon(path);
-        image = ii.getImage();
+        Image i = ii.getImage();
+
+        int w = ii.getIconWidth();
+        int h = ii.getIconHeight();
+        if (scale == 1){
+
+            image = i.getScaledInstance(w*2, h*2, Image.SCALE_DEFAULT);
+        }
+        else if (scale == 2){
+            image = i.getScaledInstance(w*4, h*4, Image.SCALE_DEFAULT);
+        }
+        else if(scale == 0){
+            image = ii.getImage();
+        }
+        else{
+            System.out.println("Wrong number!");
+        }
     }
 
     //získání rozměrů obrázku

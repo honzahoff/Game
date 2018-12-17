@@ -1,20 +1,27 @@
 package com.john;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Menu {
 
     public Rectangle lvl1 = new Rectangle(960/4 + 120, 150,200,70);
     public Rectangle lvl2 = new Rectangle(960/4 + 120, 250, 200, 70);
     public Rectangle lvl3 = new Rectangle(960/4 + 120, 350, 200, 70);
-
+    public BufferedImage i;
+    ImageLoader l = new ImageLoader();
     public void render(Graphics g){
 
 
         Graphics2D g2d = (Graphics2D) g;
+        ImageIcon ii = new ImageIcon("res/menu.png");
+        i = l.toBufferedImage(ii.getImage());
+
 
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, 960,512 );
+        //g.fillRect(0, 0, 960,540 );
+        g.drawImage(i, 0,0, 960,540, null);
 
         Font fnt = new Font("impact", Font.BOLD, 50);
         g.setFont(fnt);

@@ -27,7 +27,7 @@ public class Mouse implements MouseListener {
     if (mx >= 360 && mx <= 560){
             if (my >= 150 && my <= 220){
                 System.out.println("LVL1");
-                Board.State = Board.STATE.GAME;
+                Board.State = Board.STATE.LVL1;
                 System.out.println(Board.State);
             }
             else if(my >= 250 && my <= 320){

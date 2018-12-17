@@ -12,6 +12,7 @@ public class Player extends Sprite{
 
     public int dx;
     public int dy;
+    private int speed = 5;
 
 
 
@@ -22,20 +23,20 @@ public class Player extends Sprite{
 
     //načtení obrázku hráče
     private void loadImage(){
-        loadImage("res/spider.png");
+        loadImage("res/spider.png", 1);
         getImageDimensions();
     }
 
     //metoda pro pohyb
     public void move(){
 
-        if (x > 0 && x < 960 - width && y > 0 && y < 540 - height - 20) {
+        if (x > 0 && x < 960 - width && y > 0 && y < 540 - height) {
 
             x += dx;
             y += dy;
         }
 
-        else if (y < 0 + 16) {
+        else if (y < 20) {
             this.y = y + 10;
         }
 
@@ -46,10 +47,10 @@ public class Player extends Sprite{
         else if (x > 960 - width) {
             this.x = x - 10;
 
-        } else {
+        } else if (x < 0 + 20) {
             this.x = x + 10;
-
         }
+
 
     }
 
@@ -60,10 +61,10 @@ public class Player extends Sprite{
         int code = e.getKeyCode();
 
         if(code == KeyEvent.VK_W){
-            dy = -1;}
-        if(code == KeyEvent.VK_S){dy = 1;}
-        if(code == KeyEvent.VK_D){dx = 1;}
-        if(code == KeyEvent.VK_A){dx = -1;}
+            dy = -speed;}
+        if(code == KeyEvent.VK_S){dy = speed;}
+        if(code == KeyEvent.VK_D){dx = speed;}
+        if(code == KeyEvent.VK_A){dx = -speed;}
     }
 
     public void keyReleased(KeyEvent e){

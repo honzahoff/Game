@@ -13,10 +13,13 @@ public class Application extends JFrame {
     public void initUI(){
 
         add(new Board());
-        setSize(960,512);
+        setSize(960,540);
         setTitle("Game");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        ImageIcon ii = new ImageIcon("res/icon.png");
+        Image i = ii.getImage();
+        setIconImage(i);
     }
     public static void main(String[] args) {
         EventQueue.invokeLater(()-> {

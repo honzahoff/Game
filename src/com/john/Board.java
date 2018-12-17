@@ -12,12 +12,16 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     private final int DELAY = 10;
     private Menu m = new Menu();
     private Player player;
+
     public int live = 3;
     ImageLoader loader = new ImageLoader();
 
     public static enum STATE{
-        GAME,
+        LVL1,
+        LVL2,
+        LVL3,
         MENU
+
     };
     public static STATE State = STATE.MENU;
 
@@ -36,11 +40,16 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         setFocusable(true);
 
 
-
+        
             addKeyListener(this);
-            player = new Player(200, 200);
+
             timer = new Timer(DELAY, this);
             timer.start();
+
+            loadLevel("res/level1.png");
+
+
+
 
 
 
@@ -50,7 +59,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (State == STATE.GAME) {
+        if (State == STATE.LVL1) {
             doDrawing(g);
             paintHearts(g);
             Toolkit.getDefaultToolkit().sync();
@@ -58,6 +67,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         }
         else if (State == STATE.MENU){
          m.render(g);
+         repaint();
         }
     }
 
@@ -67,9 +77,10 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         Graphics2D g2d = (Graphics2D) g;
 
 
+
         loader.init();
         for (int i = 0; i < 30; i++) {
-            for (int j = 0; j < 16; j++) {
+            for (int j = 0; j < 17; j++) {
                 g.drawImage(loader.bck, i * 32, j * 32, this);
             }
         }
@@ -116,7 +127,11 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     public void keyPressed(KeyEvent e) {
 
             int code = e.getKeyCode();
-        if (State == STATE.GAME) {
+            if(code == KeyEvent.VK_SPACE){
+                State = STATE.MENU;
+                repaint();
+            }
+            if (State == STATE.LVL1) {
             if (code == KeyEvent.VK_R) {
                 live -= 1;
                 repaint();
@@ -129,12 +144,45 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-    if (State == STATE.GAME) {
+    if (State == STATE.LVL1) {
         player.keyReleased(e);
         }
     }
 
     public void keyTyped(KeyEvent e){}
+
+    public void loadLevel(String path){
+
+        ImageIcon ii = new ImageIcon(path);
+        Image image = ii.getImage();
+        BufferedImage i = loader.toBufferedImage(image);
+
+        int w = image.getWidth(null);
+        int h = image.getHeight(null);
+
+        for (int xx = 0; xx<w; xx++){
+            for (int yy = 0; yy<h; yy++) {
+                int pixel = i.getRGB(xx, yy);
+                int red = (pixel >> 16) & 0xff;
+                int green = (pixel >> 8) & 0xff;
+                int blue = (pixel) & 0xff;
+
+                if (red == 255){
+
+                }
+
+                if (blue == 255){
+                    player = new Player(xx * 7, yy * 7);
+
+                }
+
+                if (green == 255){
+
+                }
+
+            }
+        }
+    }
 
 }
 
