@@ -5,12 +5,19 @@ import java.awt.*;
 
 public class Application extends JFrame {
 
+   private int w;
+   private int h;
     public Application(){
         initUI();
+
     }
 
     //inicializace plochy
     public void initUI(){
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        w = screenSize.width;
+        h = screenSize.height;
 
         add(new Board());
         setSize(960,540);
@@ -28,4 +35,16 @@ public class Application extends JFrame {
         });
 
     }
+
+    public int getWidth(){
+        return w;
+    }
+
+    public int getHeight(){
+        return h;
+    }
+
+
+
+
 }

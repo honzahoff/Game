@@ -26,14 +26,15 @@ public class Sprite {
         ImageIcon ii = new ImageIcon(path);
         Image i = ii.getImage();
 
-        int w = ii.getIconWidth();
-        int h = ii.getIconHeight();
+        width = ii.getIconWidth();
+        height = ii.getIconHeight();
+
         if (scale == 1){
 
-            image = i.getScaledInstance(w*2, h*2, Image.SCALE_DEFAULT);
+            image = i.getScaledInstance(width*2, height*2, Image.SCALE_DEFAULT);
         }
         else if (scale == 2){
-            image = i.getScaledInstance(w*4, h*4, Image.SCALE_DEFAULT);
+            image = i.getScaledInstance(width*4, height*4, Image.SCALE_DEFAULT);
         }
         else if(scale == 0){
             image = ii.getImage();
@@ -46,8 +47,8 @@ public class Sprite {
     //získání rozměrů obrázku
     protected void getImageDimensions() {
 
-        width = image.getWidth(null);
-        height = image.getHeight(null);
+        width = width*2;
+        height = height*2;
     }
 
     public Image getImage() {

@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Board extends JPanel implements ActionListener, KeyListener {
 
@@ -12,14 +13,16 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     private final int DELAY = 10;
     private Menu m = new Menu();
     private Player player;
+    private JButton menuBtn = new JButton();
+    private Enemy enemy;
 
     public int live = 3;
     ImageLoader loader = new ImageLoader();
 
-    public static enum STATE{
-        LVL1,
-        LVL2,
-        LVL3,
+    ArrayList<Enemy> enemyList =new ArrayList<Enemy>();
+
+    public enum STATE{
+        LVL,
         MENU
 
     };
@@ -36,7 +39,6 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     //inicializace plochy
     public void initBoard() {
 
-        addMouseListener(new Mouse());
         setFocusable(true);
 
 
@@ -59,15 +61,25 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (State == STATE.LVL1) {
+        if (State == STATE.LVL) {
             doDrawing(g);
             paintHearts(g);
             Toolkit.getDefaultToolkit().sync();
             repaint();
         }
-        else if (State == STATE.MENU){
-         m.render(g);
-         repaint();
+        else if (State == STATE.MENU) {
+            m.render(g);
+            menuBtn.setBounds(960 / 2 - 100, 540 / 2 - 50, 200, 100);
+            menuBtn.setText("LEVEL START");
+
+            menuBtn.addActionListener(e -> {
+                State = STATE.LVL;
+                menuBtn.setVisible(false);
+            });
+
+            add(menuBtn);
+            repaint();
+
         }
     }
 
@@ -75,7 +87,8 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     //vykreslení
     private void doDrawing(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-
+        AffineTransform backup = g2d.getTransform();
+        AffineTransform at = AffineTransform.getRotateInstance(player.angle, player.getX() + 64/2, player.getY() + 64/2);
 
 
         loader.init();
@@ -85,8 +98,14 @@ public class Board extends JPanel implements ActionListener, KeyListener {
             }
         }
 
+        System.out.println(player.getW());
+        g2d.setTransform(at);
         g2d.drawImage(player.getImage(), player.getX(), player.getY(), this);
-
+        for(int i =0;i<enemyList.size();i++) {
+            Enemy temp = enemyList.get(i);
+            g2d.drawImage(temp.getImage(), temp.getX(), temp.getY(), this);
+        }
+        g2d.setTransform(backup);
 
     }
 
@@ -112,7 +131,6 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
     //reakce na stisk klávesy
     public void actionPerformed(ActionEvent e){
-
         step();
     }
 
@@ -129,9 +147,10 @@ public class Board extends JPanel implements ActionListener, KeyListener {
             int code = e.getKeyCode();
             if(code == KeyEvent.VK_SPACE){
                 State = STATE.MENU;
+                menuBtn.setVisible(true);
                 repaint();
             }
-            if (State == STATE.LVL1) {
+            if (State == STATE.LVL) {
             if (code == KeyEvent.VK_R) {
                 live -= 1;
                 repaint();
@@ -144,7 +163,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-    if (State == STATE.LVL1) {
+    if (State == STATE.LVL) {
         player.keyReleased(e);
         }
     }
@@ -168,11 +187,11 @@ public class Board extends JPanel implements ActionListener, KeyListener {
                 int blue = (pixel) & 0xff;
 
                 if (red == 255){
-
+                    enemyList.add(new Enemy(xx*15, yy*15));
                 }
 
                 if (blue == 255){
-                    player = new Player(xx * 7, yy * 7);
+                    player = new Player(xx * 15, yy * 15);
 
                 }
 
