@@ -90,7 +90,6 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         AffineTransform backup = g2d.getTransform();
         AffineTransform at = AffineTransform.getRotateInstance(player.angle, player.getX() + 64/2, player.getY() + 64/2);
 
-
         loader.init();
         for (int i = 0; i < 30; i++) {
             for (int j = 0; j < 17; j++) {
@@ -99,14 +98,14 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         }
 
         System.out.println(player.getW());
-        g2d.setTransform(at);
-        g2d.drawImage(player.getImage(), player.getX(), player.getY(), this);
+        //g2d.setTransform(at);
+        g2d.drawImage(player.getImage(), player.getX(), player.getY(), this);        
+        g2d.setTransform(backup);
+        
         for(int i =0;i<enemyList.size();i++) {
             Enemy temp = enemyList.get(i);
             g2d.drawImage(temp.getImage(), temp.getX(), temp.getY(), this);
         }
-        g2d.setTransform(backup);
-
     }
 
     //kreslení srdíček
