@@ -8,7 +8,6 @@ public class Menu extends JFrame {
 
     public BufferedImage i;
     ImageLoader l = new ImageLoader();
-    JButton m1 = new JButton();
 
     public void render(Graphics g){
 

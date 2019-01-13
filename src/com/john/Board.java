@@ -14,12 +14,14 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     private Menu m = new Menu();
     private Player player;
     private JButton menuBtn = new JButton();
-    private Enemy enemy;
+    boolean alive = true;
 
     public int live = 3;
     ImageLoader loader = new ImageLoader();
 
     ArrayList<Enemy> enemyList =new ArrayList<Enemy>();
+    ArrayList<Wall> wallList = new ArrayList<Wall>();
+
 
     public enum STATE{
         LVL,
@@ -47,8 +49,8 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
             timer = new Timer(DELAY, this);
             timer.start();
-
             loadLevel("res/level1.png");
+
 
 
 
@@ -75,6 +77,9 @@ public class Board extends JPanel implements ActionListener, KeyListener {
             menuBtn.addActionListener(e -> {
                 State = STATE.LVL;
                 menuBtn.setVisible(false);
+                live = 1;
+                timer.start();
+
             });
 
             add(menuBtn);
@@ -98,14 +103,21 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         }
 
         System.out.println(player.getW());
-        //g2d.setTransform(at);
-        g2d.drawImage(player.getImage(), player.getX(), player.getY(), this);        
-        g2d.setTransform(backup);
+
         
         for(int i =0;i<enemyList.size();i++) {
             Enemy temp = enemyList.get(i);
             g2d.drawImage(temp.getImage(), temp.getX(), temp.getY(), this);
         }
+
+        for(int i =0;i<wallList.size();i++) {
+            Wall temp = wallList.get(i);
+            g2d.drawImage(temp.getImage(), temp.getX(), temp.getY(), this);
+        }
+
+        g2d.setTransform(at);
+        g2d.drawImage(player.getImage(), player.getX(), player.getY(), this);
+        g2d.setTransform(backup);
     }
 
     //kreslení srdíček
@@ -113,7 +125,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
         loader.init();
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 1; i++) {
 
             BufferedImage img2;
             if (i < live) {
@@ -131,7 +143,12 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     //reakce na stisk klávesy
     public void actionPerformed(ActionEvent e){
         step();
+        checkCollisions();
+        isAlive();
+
     }
+
+
 
     //provedení pohybu
     private void step(){
@@ -169,7 +186,49 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
     public void keyTyped(KeyEvent e){}
 
+
+    public void isAlive(){
+        if (live > 0){
+            alive = true;
+        }
+        else{
+            alive = false;
+            State = STATE.MENU;
+            menuBtn.setVisible(true);
+            resetPlayer(50, 400);
+            timer.stop();
+
+        }
+    }
+
+    public void checkCollisions(){
+        Rectangle r1 = player.getBounds();
+
+        for (Wall wall:wallList) {
+            Rectangle r2 = wall.getBounds();
+
+            if (r1.intersects(r2)){
+
+            }
+        }
+
+        for (Enemy enemy:enemyList){
+            Rectangle r3 = enemy.getBounds();
+
+            if (r1.intersects(r3)){
+                live -=1;
+                repaint();
+            }
+        }
+    }
+
+    public void resetPlayer(int x, int y){
+        player.x = x;
+        player.y = y;
+    }
+
     public void loadLevel(String path){
+
 
         ImageIcon ii = new ImageIcon(path);
         Image image = ii.getImage();
@@ -189,13 +248,17 @@ public class Board extends JPanel implements ActionListener, KeyListener {
                     enemyList.add(new Enemy(xx*15, yy*15));
                 }
 
-                if (blue == 255){
+                if (blue == 255 && red == 0){
                     player = new Player(xx * 15, yy * 15);
 
                 }
 
-                if (green == 255){
+                if (blue == 255 && red == 255){
 
+                }
+
+                if (green == 255){
+                    wallList.add(new Wall(xx*15, yy*15));
                 }
 
             }
