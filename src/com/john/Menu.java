@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 public class Menu extends JFrame {
 
+    //stará se o vykreslení menu
     public BufferedImage i;
     ImageLoader l = new ImageLoader();
 

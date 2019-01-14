@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 public class Board extends JPanel implements ActionListener, KeyListener {
 
+
+    //proměnné
     private Timer timer;
     private final int DELAY = 10;
     private Menu m = new Menu();
@@ -23,16 +25,20 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     ArrayList<Wall> wallList = new ArrayList<Wall>();
 
 
+    //enumy - určují, jaká scéna je aktivní
     public enum STATE{
         LVL,
         MENU
 
     };
+
+    //zapnutí statu menu na začátku
     public static STATE State = STATE.MENU;
 
     public Board() {
 
 
+        //inicializace
             initBoard();
 
     }
@@ -45,11 +51,12 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
 
         
-            addKeyListener(this);
+        addKeyListener(this);
 
-            timer = new Timer(DELAY, this);
-            timer.start();
-            loadLevel("res/level1.png");
+        timer = new Timer(DELAY, this);
+        timer.start();
+        //načítá level - png obrázek
+        loadLevel("res/level1.png");
 
 
 
@@ -62,6 +69,8 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     //implementovaná třída
     @Override
     public void paintComponent(Graphics g) {
+
+        //vykresluje menu a level pomocí statu
         super.paintComponent(g);
         if (State == STATE.LVL) {
             doDrawing(g);
@@ -74,11 +83,17 @@ public class Board extends JPanel implements ActionListener, KeyListener {
             menuBtn.setBounds(960 / 2 - 100, 540 / 2 - 50, 200, 100);
             menuBtn.setText("LEVEL START");
 
+            //lambda příkaz na actionlisteneru
             menuBtn.addActionListener(e -> {
                 State = STATE.LVL;
                 menuBtn.setVisible(false);
                 live = 1;
                 timer.start();
+
+                doDrawing(g);
+                player.move();
+                player.stopPlayer();
+
 
             });
 
@@ -91,6 +106,8 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
     //vykreslení
     private void doDrawing(Graphics g) {
+
+        //vykreslování objektů na ploše
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform backup = g2d.getTransform();
         AffineTransform at = AffineTransform.getRotateInstance(player.angle, player.getX() + 64/2, player.getY() + 64/2);
@@ -155,6 +172,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
     //provedení pohybu
     private void step(){
+        //krok hráče
         player.move();
         repaint(player.getX() -1, player.getY() - 1, player.getW() +2, player.getH()+2);
     }
@@ -182,6 +200,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+        //mezerník zapne pause menu
     if (State == STATE.LVL) {
         player.keyReleased(e);
         }
@@ -191,6 +210,8 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
 
     public void isAlive(){
+
+        //jestli je naživu
         if (live > 0){
             alive = true;
         }
@@ -205,6 +226,8 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     }
 
     public void checkCollisions(){
+
+        //konroliuje kolize
         Rectangle r1 = player.getBounds();
 
 
@@ -227,13 +250,14 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     }
 
     public void resetPlayer(int x, int y){
+        //resetuje hráče po zabití na původní pozici
         player.x = x;
         player.y = y;
     }
 
     public void loadLevel(String path){
 
-
+        //načíta level pomocí barevných kódů
         ImageIcon ii = new ImageIcon(path);
         Image image = ii.getImage();
         BufferedImage i = loader.toBufferedImage(image);

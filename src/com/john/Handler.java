@@ -8,5 +8,5 @@ public class Handler {
     public int spiderW = 64;
     public int spiderH = 64;
 
-    public int level = 0;
+
 }

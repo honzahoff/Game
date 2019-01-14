@@ -29,6 +29,7 @@ public class Sprite {
         width = ii.getIconWidth();
         height = ii.getIconHeight();
 
+        //scale, stará se o rozměry hráče
         if (scale == 1){
 
             image = i.getScaledInstance(width*2, height*2, Image.SCALE_DEFAULT);

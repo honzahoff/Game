@@ -4,6 +4,7 @@ import java.awt.*;
 
 public class Wall extends  Sprite{
 
+    //třída zdi, která dědí ze sprite
     public Wall(int x, int y) {
         super(x, y);
         loadImage();

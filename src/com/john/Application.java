@@ -19,6 +19,7 @@ public class Application extends JFrame {
         w = screenSize.width;
         h = screenSize.height;
 
+        //přidání Boardu - plochy s objekty a grafikou do JFrame
         add(new Board());
         setSize(960,540);
         setTitle("Game");
@@ -28,6 +29,8 @@ public class Application extends JFrame {
         Image i = ii.getImage();
         setIconImage(i);
     }
+
+    //vytvoření nového vlákna a zapnutí aplikace na něm
     public static void main(String[] args) {
         EventQueue.invokeLater(()-> {
             Application ex = new Application();
@@ -36,6 +39,8 @@ public class Application extends JFrame {
 
     }
 
+
+    //gettery
     public int getWidth(){
         return w;
     }

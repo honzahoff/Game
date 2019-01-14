@@ -4,6 +4,7 @@ import java.awt.*;
 
 public class Enemy extends Sprite{
 
+    //třída protihráče, která dědí ze sprite
     public Enemy(int x, int y) {
         super(x, y);
         loadImage();

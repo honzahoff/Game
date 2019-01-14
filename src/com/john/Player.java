@@ -32,6 +32,7 @@ public class Player extends Sprite{
     //metoda pro pohyb
     public void move(){
 
+        //aby nešel mimo hrací pole
         if (x > 0 && x < 960 - 64 && y > 0 && y < 540 - 64 ) {
 
             x += dx;
@@ -57,7 +58,8 @@ public class Player extends Sprite{
     }
 
 
-    //získání zmáčknuté klávesy
+
+    //získání zmáčknuté klávesy a ovládání hráče
     public void keyPressed(KeyEvent e){
 
         int code = e.getKeyCode();
@@ -80,12 +82,18 @@ public class Player extends Sprite{
 
     public void keyReleased(KeyEvent e){
 
+        //resetování rychlosti po puštění klávesy
         int code = e.getKeyCode();
 
         if(code == KeyEvent.VK_W){dy = 0;}
         if(code == KeyEvent.VK_S){dy = 0;}
         if(code == KeyEvent.VK_D){dx = 0;}
         if(code == KeyEvent.VK_A){dx = 0;}
+    }
+
+    public void stopPlayer(){
+        dy = 0;
+        dx = 0;
     }
     public Rectangle getBounds() {
         return new Rectangle(x, y, width-20, height-20);
