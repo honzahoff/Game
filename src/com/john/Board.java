@@ -146,7 +146,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         checkCollisions();
         isAlive();
 
-        
+
 
 
     }
