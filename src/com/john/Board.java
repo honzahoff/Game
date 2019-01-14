@@ -17,12 +17,15 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     private Player player;
     private JButton menuBtn = new JButton();
     boolean alive = true;
+    private Key key;
+    private int win = 0;
 
     public int live = 3;
     ImageLoader loader = new ImageLoader();
 
     ArrayList<Enemy> enemyList =new ArrayList<Enemy>();
     ArrayList<Wall> wallList = new ArrayList<Wall>();
+    ArrayList<Key> keyList = new ArrayList<Key>();
 
 
     //enumy - určují, jaká scéna je aktivní
@@ -127,6 +130,11 @@ public class Board extends JPanel implements ActionListener, KeyListener {
             g2d.drawImage(temp.getImage(), temp.getX(), temp.getY(), this);
         }
 
+        for(int i =0;i<keyList.size();i++) {
+            Key temp = keyList.get(i);
+            g2d.drawImage(temp.getImage(), temp.getX(), temp.getY(), this);
+        }
+
         for(int i =0;i<wallList.size();i++) {
             Wall temp = wallList.get(i);
             g2d.drawImage(temp.getImage(), temp.getX(), temp.getY(), this);
@@ -135,6 +143,16 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         g2d.setTransform(at);
         g2d.drawImage(player.getImage(), player.getX(), player.getY(), this);
         g2d.setTransform(backup);
+
+        if (win == 1){
+            g2d.setColor(Color.WHITE);
+            g2d.fillRect(375-100, 256-100, 300,300);
+            
+        }
+
+        else{
+
+        }
     }
 
     //kreslení srdíček
@@ -154,6 +172,8 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
             g.drawImage(img2, i * 32, 0, null);
             g.drawString("Live:" + live, 50, 50);
+
+
         }
     }
 
@@ -247,6 +267,17 @@ public class Board extends JPanel implements ActionListener, KeyListener {
                 repaint();
             }
         }
+
+        for (Key key:keyList){
+            Rectangle r4 = key.getBounds();
+
+            if (r1.intersects(r4)){
+                key.x = 50;
+                key.y = 500;
+
+                win = 1;
+            }
+        }
     }
 
     public void resetPlayer(int x, int y){
@@ -272,7 +303,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
                 int green = (pixel >> 8) & 0xff;
                 int blue = (pixel) & 0xff;
 
-                if (red == 255){
+                if (red == 255 && blue == 0){
                     enemyList.add(new Enemy(xx*15, yy*15));
                 }
 
@@ -282,7 +313,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
                 }
 
                 if (blue == 255 && red == 255){
-
+                    keyList.add(new Key(xx*15, yy*15));
                 }
 
                 if (green == 255){
