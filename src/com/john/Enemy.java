@@ -15,7 +15,7 @@ public class Enemy extends Sprite{
     }
 
     public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
+        return new Rectangle(x, y, width-20, height-20);
     }
 
 

@@ -146,6 +146,9 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         checkCollisions();
         isAlive();
 
+        
+
+
     }
 
 
@@ -203,6 +206,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
     public void checkCollisions(){
         Rectangle r1 = player.getBounds();
+
 
         for (Wall wall:wallList) {
             Rectangle r2 = wall.getBounds();

@@ -88,7 +88,7 @@ public class Player extends Sprite{
         if(code == KeyEvent.VK_A){dx = 0;}
     }
     public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
+        return new Rectangle(x, y, width-20, height-20);
     }
 
 }
